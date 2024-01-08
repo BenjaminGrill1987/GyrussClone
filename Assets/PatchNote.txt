@@ -1,0 +1,12 @@
+Version 0.0.3
+
+-Bugfix about counting rest ships.
+-Animation added
+-Background changing
+-Rounds simulated
+
+Version 0.0.4
+
+-Audio Player seperated from entities
+-Bugfix that you can hit other rockets
+-Enemy is now a Class which can be inherited from
