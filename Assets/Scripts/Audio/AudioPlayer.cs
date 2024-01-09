@@ -1,10 +1,11 @@
+using GyroSpace.Utility;
 using UnityEngine;
 
 namespace GyroSpace.Audio
 {
 
     [RequireComponent(typeof(AudioSource))]
-    public class AudioPlayer : MonoBehaviour
+    public class AudioPlayer : Singleton<AudioPlayer>
     {
         private AudioSource _audioSource;
 
@@ -13,10 +14,10 @@ namespace GyroSpace.Audio
             _audioSource = GetComponent<AudioSource>();
         }
 
-        public void PlayAudio(AudioClip newClip)
+        public static void PlayAudio(AudioClip newClip)
         {
-            _audioSource.clip = newClip;
-            _audioSource.Play();
+            _Instance._audioSource.clip = newClip;
+            _Instance._audioSource.Play();
         }
     }
 }

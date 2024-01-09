@@ -8,6 +8,7 @@ namespace GyroSpace.Interface
         Game,
         GameOver,
         Pause,
+        TestScene,
         Quit
     }
 }

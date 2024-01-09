@@ -13,10 +13,9 @@ namespace GyroSpace.Player
         [SerializeField] private float _radius, _movementSpeed;
         [SerializeField] private GameObject _bullet;
         [SerializeField] private int _health;
-        [SerializeField] private AudioPlayer _audioPlayer;
         [SerializeField] private AudioClip _audioClip;
-        public PlayerInput _playerInput;
-
+        
+        private PlayerInput _playerInput;
         private Vector3 _positionOffset;
         private float _angle;
 
@@ -66,9 +65,9 @@ namespace GyroSpace.Player
 
         private void Shoot()
         {
-            _audioPlayer.PlayAudio(_audioClip);
+            AudioPlayer.PlayAudio(_audioClip);
             var bul = Instantiate(_bullet, _bulletSpawner.position, Quaternion.identity);
-            bul.GetComponent<Bullet>().SetPara((_target.position - transform.position).normalized, "Enemy", _audioPlayer);
+            bul.GetComponent<Bullet>().SetPara(transform.up, "Enemy");
         }
 
         public void DamageTaken(int damage)
@@ -86,9 +85,6 @@ namespace GyroSpace.Player
             Destroy(gameObject);
         }
 
-        private bool IsShooting()
-        {
-            return _playerInput.Player.Shoot.WasPerformedThisFrame();
-        }
+        private bool IsShooting() => _playerInput.Player.Shoot.WasPerformedThisFrame();
     }
 }

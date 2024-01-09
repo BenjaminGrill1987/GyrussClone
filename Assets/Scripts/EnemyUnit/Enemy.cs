@@ -1,10 +1,8 @@
-using UnityEngine;
 using GyroSpace.Interface;
-using GyroSpace.Audio;
-using GyroSpace.Player;
-using GyroSpace.Utility;
 using GyroSpace.Level;
 using GyroSpace.UI;
+using GyroSpace.Utility;
+using UnityEngine;
 
 namespace GyroSpace.EnemyUnit
 {
@@ -13,26 +11,31 @@ namespace GyroSpace.EnemyUnit
     {
         [SerializeField] int _health, _timeToMoveOn;
         [SerializeField] protected float _movementSpeed, _maxRadius, _attackTime;
-        [SerializeField] private Transform _bulletSpawner;
-        [SerializeField] GameObject _rocket;
-        [SerializeField] AudioClip _audioClip;
+        [SerializeField] protected GameObject _rocket;
+        [SerializeField] protected AudioClip _audioClip;
 
         protected Vector3 _target;
         protected Vector3 _positionOffset;
         protected float _angle, _radius, _tempRadius;
         protected Timer _timer, _attackTimer;
-        protected CircleCollider2D _col;
+        protected CapsuleCollider2D _col;
         protected int _direction;
         protected bool _directionIsChanged = false;
-        protected AudioPlayer _audioPlayer;
 
         protected virtual void Start()
         {
-            _direction = 1;
-            RoundHandler.AddShip(gameObject);
-            _timer = new Timer(_timeToMoveOn);
-            _attackTimer = new Timer(_attackTime);
-            _col = GetComponent<CircleCollider2D>();
+            if (GameState._CurrentState == Gamestates.Game)
+            {
+                _direction = 1;
+                RoundHandler.AddShip(gameObject);
+                _timer = new Timer(_timeToMoveOn);
+                _attackTimer = new Timer(_attackTime);
+                _col = GetComponent<CapsuleCollider2D>();
+            }
+            else if (GameState._CurrentState == Gamestates.TestScene)
+            {
+                _attackTimer = new Timer(_attackTime);
+            }
         }
 
         public void SetPara(Vector3 newTarget, float newAngle, float newRadius)
@@ -96,16 +99,8 @@ namespace GyroSpace.EnemyUnit
             Destroy(gameObject);
         }
 
-        protected void Attack()
-        {
-            GameObject bullet = Instantiate(_rocket, _bulletSpawner.position, Quaternion.identity);
-            bullet.GetComponent<Bullet>().SetPara((_bulletSpawner.position - transform.position).normalized, "Player", _audioPlayer);
-            _audioPlayer.PlayAudio(_audioClip);
-            _attackTimer.Reset();
-        }
+        protected abstract void Attack();
 
         private void ChangeDirection() => _direction *= -1;
-
-        public void GetAudioPlayer(AudioPlayer newAudioPlayer) => _audioPlayer = newAudioPlayer;
     }
 }

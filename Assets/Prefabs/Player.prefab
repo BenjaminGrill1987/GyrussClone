@@ -101,9 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
   _bulletSpawner: {fileID: 8947303974991467972}
-  _radius: 5
-  _movementSpeed: 5
-  _bullet: {fileID: 6815769596667725665, guid: 6a049243e203e1e488071e0a0ae9e816, type: 3}
+  _radius: 4.5
+  _movementSpeed: 2
+  _bullet: {fileID: 100000, guid: bfe0ba4acc768a5448d46a6c63d8106a, type: 3}
   _health: 1
   _audioPlayer: {fileID: 0}
   _audioClip: {fileID: 8300000, guid: f095ed7fb8ed84caa814c14d6ea51fc0, type: 3}

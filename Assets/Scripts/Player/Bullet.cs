@@ -15,11 +15,10 @@ namespace GyroSpace.Player
         private Vector3 _target, _startPosition;
         private Rigidbody2D _rigidbody;
         private string _targetTag;
-        private AudioPlayer _audioPlayer;
 
         void FixedUpdate()
         {
-            if (GameState._CurrentState == Gamestates.Game)
+            if (GameState._CurrentState == Gamestates.Game || GameState._CurrentState == Gamestates.TestScene)
             {
                 if (Vector3.Distance(_startPosition, transform.position) >= 3.5f) Destroy(gameObject);
             }
@@ -29,13 +28,12 @@ namespace GyroSpace.Player
             }
         }
 
-        public void SetPara(Vector3 newTarget, string newTag, AudioPlayer newAudioPlayer)
+        public void SetPara(Vector3 newTarget, string newTag)
         {
             _target = newTarget;
             _targetTag = newTag;
             _startPosition = transform.position;
             _rigidbody = GetComponent<Rigidbody2D>();
-            _audioPlayer = newAudioPlayer;
 
             Move();
             LookingAtTarget();
@@ -59,7 +57,7 @@ namespace GyroSpace.Player
             if (collision.gameObject.CompareTag(_targetTag))
             {
                 collision.gameObject.GetComponent<iDamageAble>().DamageTaken(_damage);
-                _audioPlayer.PlayAudio(_audioClip);
+                AudioPlayer.PlayAudio(_audioClip);
                 Destroy(gameObject);
             }
         }

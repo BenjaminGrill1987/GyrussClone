@@ -8,6 +8,7 @@ namespace GyroSpace.Editor
     {
         private string _newVersion;
         private bool _versionIsLoaded = false;
+        private bool _testScene;
 
         [MenuItem("Settings/Version")]
         public static void ShowWindow()

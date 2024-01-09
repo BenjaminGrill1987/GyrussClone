@@ -1,6 +1,6 @@
-using GyroSpace.Audio;
 using GyroSpace.EnemyUnit;
 using GyroSpace.Utility;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GyroSpace.Level
@@ -10,10 +10,9 @@ namespace GyroSpace.Level
     {
         [Header("Spawning enemies")]
         [SerializeField] int _min, _max;
-        [SerializeField] GameObject _enemy;
+        [SerializeField] List<GameObject> _enemy;
         [Header("Time for new Enemy Group")]
         [SerializeField] float _time;
-        [SerializeField] AudioPlayer _audioPlayer;
 
         private Timer _timer;
 
@@ -44,9 +43,8 @@ namespace GyroSpace.Level
 
             for (int index = 0; index < numberOfEnemies; index++)
             {
-                var newEnemy = Instantiate(_enemy, transform.root.position, Quaternion.identity);
+                var newEnemy = Instantiate(_enemy[Random.Range(0,_enemy.Count)], transform.root.position, Quaternion.identity);
                 newEnemy.GetComponent<Enemy>().SetPara(transform.root.position, tempAngle, 0);
-                newEnemy.GetComponent<Enemy>().GetAudioPlayer(_audioPlayer);
                 tempAngle += angle;
             }
         }
